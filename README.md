@@ -80,3 +80,65 @@ python app.py
 | **POST** | `/register` | User signup        |
 | **GET**  | `/chats`    | Fetch user chats   |
 | **POST** | `/message`  | Send a new message |
+
+## 📌 Chat App - Database (PostgreSQL)
+
+### 🚀 Getting Started
+
+#### 1️⃣ Install PostgreSQL
+
+If PostgreSQL is not installed, install it using:
+
+- MacOS (Homebrew)
+
+```bash
+brew install postgresql
+```
+
+- Ubuntu/Debian
+
+```bash
+sudo apt update
+sudo apt install postgresql postgresql-contrib
+```
+
+- Windows (Chocolatey)
+
+```bash
+choco install postgresql
+```
+
+After installation, start the PostgreSQL service:
+
+```bash
+sudo service postgresql start  # Ubuntu/Debian
+brew services start postgresql  # MacOS
+```
+
+#### 2️⃣ Create a New Database
+
+Log into PostgreSQL:
+
+```bash
+psql -U postgres
+```
+
+Then, create a database for the chat app
+
+#### 4️⃣ Update Environment Variables
+
+In the .env file, update:
+
+```python
+DATABASE_URL=postgresql://chat_user:securepassword@localhost/chat_app
+```
+
+#### 5️⃣ Apply Database Migrations
+
+If using SQLAlchemy with Flask-Migrate, run:
+
+```bash
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
+```
