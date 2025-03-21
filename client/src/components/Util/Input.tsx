@@ -7,12 +7,23 @@ interface InputProps {
   error?: string;
 }
 
-const Input: React.FC<InputProps> = ({ label, type, name, value, onChange, error }) => {
+export const Input: React.FC<InputProps> = ({ label, type, name, value, onChange, error }) => {
   return (
-    <div>
-      <label htmlFor={name}>{label}</label>
-      <input type={type} id={name} name={name} value={value} onChange={onChange} />
-      {error && <div>{error}</div>}
+    <div className="">
+      <label className="block text-gray-700 font-medium">{label}</label>
+      <input
+        type={type}
+        name={name}
+        value={value}
+        onChange={onChange}
+        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-600 text-gray-600 outline-none"
+        placeholder={`Enter ${label}`}
+      />
+      {error && (
+        <div className="mt-1 text-red-600 text-sm font-medium bg-red-100 border border-red-400 p-2 rounded">
+          {error}
+        </div>
+      )}
     </div>
   );
 };
