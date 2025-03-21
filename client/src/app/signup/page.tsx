@@ -112,7 +112,7 @@ export default function SignIn() {
                 <div className='p-4'>
                   <h3 className='text-4xl font-bold text-secondary mb-4'>Register</h3>
                   {submitted && <div className="text-green-600 mb-3">Form submitted successfully!</div>}
-                  <p className='text-md md:text-lg text-accent'>Already have an account? Click <Link href="/signin" className='text-blue-500 cursor-pointer underline font-semibold'>Sign In</Link> to login.</p>
+                  <p className='text-md md:text-lg text-accent'>Already have an account? Click <Link href="/" className='text-blue-500 cursor-pointer underline font-semibold'>Sign In</Link> to login.</p>
                 </div>
 
                 <form className="p-4 space-y-4" onSubmit={handleSubmit} noValidate>
