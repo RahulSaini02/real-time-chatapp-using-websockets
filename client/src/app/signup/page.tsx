@@ -19,7 +19,7 @@ export default function SignIn() {
     const [buttonDisabled, setButtonDisabled] = useState(true);
     const [submitted, setSubmitted] = useState({
       message: "",
-      status: false
+      status: ""
     });
     const router = useRouter(); 
   
@@ -71,9 +71,9 @@ export default function SignIn() {
       });
 
       const data = await response.json();
-      setSubmitted({message: data.message, status: true});
-
+      
       if (response.ok) {
+        setSubmitted({message: data.message, status: "passed"});
         // Clear form after successful submission
         setUser({ name: "", email: "", password: "" });
         setButtonDisabled(true); // Disable button again
@@ -82,6 +82,8 @@ export default function SignIn() {
           router.replace("/")
         }, 3000)
         
+      } else {
+        setSubmitted({message: data.error, status: "failed"});
       }
     };
   }
@@ -126,7 +128,13 @@ export default function SignIn() {
               <div>
                 <div className='p-4'>
                   <h3 className='text-4xl font-bold text-secondary mb-4'>Register</h3>
-                  {submitted.status && <div className="text-green-600 mb-3">{submitted.message} Redirecting you to Sign In Page... in 3 seconds</div>}
+                  { submitted.status == "passed" ?
+                    (
+                      <div className="text-success mb-3">{submitted.message} Redirecting you to Sign In Page... in 3 seconds</div>
+                    ) : (
+                      <div className="text-error mb-3">{submitted.message}</div>
+                    )
+                  }
                   <p className='text-md md:text-lg text-accent'>Already have an account? <Link href="/" className='text-blue-500 cursor-pointer underline font-semibold'>Sign In</Link> to login.</p>
                 </div>
 

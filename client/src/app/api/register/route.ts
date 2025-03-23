@@ -13,10 +13,10 @@ export async function POST ( req: NextRequest ) {
     const data = await response.json();
 
     if ( !response.ok ) {
-      return NextResponse.json( { message: data.message || "Error registering user" }, { status: response.status } );
+      return NextResponse.json( { error: data.error }, { status: response.status } );
     }
 
-    return NextResponse.json( { message: data.message || "User registered successfully!" }, { status: 201 } );
+    return NextResponse.json( { message: data.message }, { status: 201 } );
 
   } catch ( error ) {
     return NextResponse.json( { message: error || "Internal server error" }, { status: 500 } );
