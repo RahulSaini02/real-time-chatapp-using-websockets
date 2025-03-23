@@ -80,7 +80,7 @@ export default function SignIn() {
 
         setTimeout(() => {
           router.replace("/")
-        }, 5000)
+        }, 3000)
         
       }
     };
@@ -126,7 +126,7 @@ export default function SignIn() {
               <div>
                 <div className='p-4'>
                   <h3 className='text-4xl font-bold text-secondary mb-4'>Register</h3>
-                  {submitted.status && <div className="text-green-600 mb-3">{submitted.message} Redirecting you to Sign In Page</div>}
+                  {submitted.status && <div className="text-green-600 mb-3">{submitted.message} Redirecting you to Sign In Page... in 3 seconds</div>}
                   <p className='text-md md:text-lg text-accent'>Already have an account? <Link href="/" className='text-blue-500 cursor-pointer underline font-semibold'>Sign In</Link> to login.</p>
                 </div>
 

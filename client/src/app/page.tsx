@@ -2,13 +2,11 @@
 
 import Image from 'next/image'
 import React from 'react'
-import { useRouter } from 'next/navigation'
 import { Input } from '@/components/Util/Input';
 import Link from 'next/link';
 
 const SignIn = () => {  
 
-  const router = useRouter();
   const[username, setUsername] = React.useState('')
   const[password, setPassword] = React.useState('')
   const[error, setError] = React.useState('')
@@ -55,12 +53,6 @@ const SignIn = () => {
       }
   };
 
-  const handleSignUp = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-    router.push('/signup');
-  };
-
-
     return (
       <div className="min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-nunito-sans)] bg-white/90">
         {/* Overlay */}
@@ -92,8 +84,8 @@ const SignIn = () => {
               </div>
             </div>
             <div className='text-accent'>
-            <h3 className='text-4xl font-bold text-secondary mb-4'>Login</h3>
-            <p className='text-md md:text-lg text-accent'>Need an account? <Link href="/signup" className='text-blue-500 cursor-pointer underline font-semibold'>Create Account</Link>.</p><br />
+              <h3 className='text-4xl font-bold text-secondary mb-4'>Login</h3>
+              <p className='text-md md:text-lg text-accent'>Need an account? <Link href="/signup" className='text-blue-500 cursor-pointer underline font-semibold'>Create Account</Link>.</p><br />
               <div>
                 <form>
                     <Input
@@ -112,13 +104,11 @@ const SignIn = () => {
                       onChange={(e)=>setPassword(e.target.value)}
                     />
                     <br />
-                    <div style={{justifyContent:'space-between'}}>
+                    <div className='space-x-2' style={{justifyContent:'space-between'}}>
                       <button className="bg-primary cursor-pointer text-white px-4 py-2 rounded hover:bg-primary/95 transition-colors duration-150 ease-in" onClick={handleLogin}>Login</button>
-                      <br />
-                      <p className='text-md md:text-lg text-accent'><Link href="/signup" className='text-blue-500 cursor-pointer underline font-semibold'>Forgot Password</Link>.</p>
+                      <p className='text-md md:text-lg text-accent mt-5'><Link href="/signup" className='text-blue-500 cursor-pointer underline font-semibold'>Forgot Password?</Link></p>
                     </div>
                     {error && <p style={{color:'red'}}>{error}</p>}
-
                 </form>
               </div>
             </div> 
