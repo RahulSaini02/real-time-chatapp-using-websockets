@@ -1,6 +1,6 @@
 CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
-CREATE TABLE chatapp.users(
+CREATE TABLE IF NOT EXISTS chatapp.users(
 	userid UUID PRIMARY KEY DEFAULT gen_random_uuid(),
 	name VARCHAR(256) NOT NULL,
 	email VARCHAR(320) UNIQUE NOT NULL,
