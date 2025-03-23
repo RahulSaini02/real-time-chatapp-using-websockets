@@ -2,12 +2,69 @@
 
 import Image from 'next/image'
 import React from 'react'
+import { useRouter } from 'next/navigation'
+import { Input } from '@/components/Util/Input';
+import Link from 'next/link';
 
-const SignIn = () => {    
+const SignIn = () => {  
+
+  const router = useRouter();
+  const[username, setUsername] = React.useState('')
+  const[password, setPassword] = React.useState('')
+  const[error, setError] = React.useState('')
+
+  const handleLogin = async (event: React.MouseEvent<HTMLButtonElement>) => {
+      event.preventDefault();
+      const validusername = 'admin'
+      const validpassword = 'password'
+
+    //   try{
+    //     const response = await fetch('http://localhost:3000/api/login', {
+    //       method: 'POST',
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify({
+    //         username, 
+    //         password
+    //       }),
+    //     });
+
+    //     if (response.ok){
+    //       const data = await response.json();
+    //       console.log('Login Successful:', data);
+    //       setError('valid')
+    //       router.push('/dashboard');
+    //     }else{
+    //       const errorData = await response.json();
+    //       console.log('Login Failed:', errorData);
+    //       setError(errorData.message||'Invalid Credentials');
+    //     }
+    //   }catch(error){
+    //     console.log('Error during login:', error);
+    //     setError('An error occured. Please try again later.');
+    //   }
+    // };
+
+      if (username === validusername && password === validpassword){ 
+          console.log('Login Success', username, password)
+          setError('valid')
+      }
+      else{
+          setError('invalid')
+      }
+  };
+
+  const handleSignUp = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    router.push('/signup');
+  };
+
+
     return (
       <div className="min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-nunito-sans)] bg-white/90">
         {/* Overlay */}
-        <div className="absolute inset-0 bg-green-600 bg-opacity-50 h-[50vh] md:h-[35vh]"></div>
+        <div className="absolute inset-0 bg-primary bg-opacity-50 h-[50vh] md:h-[35vh]"></div>
         {/* Logo */}
         <Image src='logo/logo-inline-white.svg' alt="Inline Logo" height={100} width={250} className='relative z-10 pb-20' />
         <div className='relative z-10 flex justify-center place-items-center'>
@@ -35,8 +92,36 @@ const SignIn = () => {
               </div>
             </div>
             <div className='text-accent'>
-              Form Input
-            </div>
+            <h3 className='text-4xl font-bold text-secondary mb-4'>Login</h3>
+            <p className='text-md md:text-lg text-accent'>Need an account? <Link href="/signup" className='text-blue-500 cursor-pointer underline font-semibold'>Create Account</Link>.</p><br />
+              <div>
+                <form>
+                    <Input
+                      label='Username' 
+                      name='username'
+                      type='text' 
+                      value={username} 
+                      onChange={(e)=>setUsername(e.target.value)}
+                    />
+                    <br />
+                    <Input
+                      label='Password' 
+                      name='password'
+                      type='password' 
+                      value={password} 
+                      onChange={(e)=>setPassword(e.target.value)}
+                    />
+                    <br />
+                    <div style={{justifyContent:'space-between'}}>
+                      <button className="bg-primary cursor-pointer text-white px-4 py-2 rounded hover:bg-primary/95 transition-colors duration-150 ease-in" onClick={handleLogin}>Login</button>
+                      <br />
+                      <p className='text-md md:text-lg text-accent'><Link href="/signup" className='text-blue-500 cursor-pointer underline font-semibold'>Forgot Password</Link>.</p>
+                    </div>
+                    {error && <p style={{color:'red'}}>{error}</p>}
+
+                </form>
+              </div>
+            </div> 
           </div>
         </div>
       </div>
