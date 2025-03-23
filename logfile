@@ -30,3 +30,10 @@
 2025-03-23 16:56:23.285 CDT [64492] STATEMENT:  select * from chatapp.users;
 2025-03-23 16:57:56.003 CDT [57205] LOG:  checkpoint starting: time
 2025-03-23 16:57:56.525 CDT [57205] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.512 s, sync=0.001 s, total=0.525 s; sync files=6, longest=0.001 s, average=0.001 s; distance=4 kB, estimate=4 kB; lsn=0/22BD3A0, redo lsn=0/22BD348
+2025-03-23 17:49:28.273 CDT [65205] ERROR:  column "john@example.com" does not exist at character 41
+2025-03-23 17:49:28.273 CDT [65205] STATEMENT:  delete from chatapp.users where email = "john@example.com";
+2025-03-23 17:52:56.543 CDT [57205] LOG:  checkpoint starting: time
+2025-03-23 17:52:57.065 CDT [57205] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.515 s, sync=0.002 s, total=0.525 s; sync files=6, longest=0.001 s, average=0.001 s; distance=1 kB, estimate=4 kB; lsn=0/22BD9D8, redo lsn=0/22BD980
+2025-03-23 18:02:30.657 CDT [62057] LOG:  could not receive data from client: Operation timed out
+2025-03-23 18:34:39.078 CDT [57205] LOG:  checkpoint starting: time
+2025-03-23 18:34:39.496 CDT [57205] LOG:  checkpoint complete: wrote 5 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.412 s, sync=0.002 s, total=0.420 s; sync files=5, longest=0.001 s, average=0.001 s; distance=1 kB, estimate=3 kB; lsn=0/22BE098, redo lsn=0/22BE040

@@ -8,12 +8,10 @@ routes = Blueprint("routes", __name__)
 @routes.route("/api/register", methods=["POST"])
 def register():
   try:
-    data = request.get_json()  # Ensure JSON parsing
+    data = request.get_json()
     if not data:
         return jsonify({"error": "Invalid JSON"}), 400
-
-    print("Received Data:", data)
-
+        
     name = data.get("name")
     email = data.get("email")
     password = data.get("password")
