@@ -3,15 +3,17 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_HOST = os.getenv("DB_HOST")
+DB_PORT = os.getenv("DB_PORT")
+DATABASE = os.getenv("DATABASE")
 
-user = os.getenv("DB_USER")
-password = os.getenv("DB_PASSWORD")
-host = os.getenv("DB_HOST")
-port = os.getenv("DB_PORT")
-database = os.getenv("DATABASE")
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DATABASE}"
+
+print(DATABASE_URL)
 
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev")
-    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL', f'postgresql://{user}:{password}@{host}:{port}/{database}')
+    SQLALCHEMY_DATABASE_URI = DATABASE_URL
     SQLALCHEMY_TRACK_MODIFICATIONS = False

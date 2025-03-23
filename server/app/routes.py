@@ -5,9 +5,15 @@ from app.utils import hash_password
 
 routes = Blueprint("routes", __name__)
 
-@routes.route("/register", methods=["POST"])
+@routes.route("/api/register", methods=["POST"])
 def register():
-    data = request.json
+  try:
+    data = request.get_json()  # Ensure JSON parsing
+    if not data:
+        return jsonify({"error": "Invalid JSON"}), 400
+
+    print("Received Data:", data)
+
     name = data.get("name")
     email = data.get("email")
     password = data.get("password")
@@ -16,13 +22,20 @@ def register():
     if not name or not email or not password:
         return jsonify({"error": "Name, email, and password are required"}), 400
 
-    try:
-        hashed_password = hash_password(password)  # Secure password before saving
+    # Check if user already exists
+    existing_user = User.query.filter_by(email=email).first()
+    if existing_user:
+        return jsonify({"error": "Email already registered"}), 409  # Conflict error
 
-        new_user = User(name=name, email=email, password=hashed_password, profile_pic=profile_pic)
-        db.session.add(new_user)
-        db.session.commit()
-        return jsonify({"message": "User registered successfully"}), 201
-    except Exception as e:
-        db.session.rollback()
-        return jsonify({"error": str(e)}), 400
+    hashed_password = hash_password(password)
+
+    new_user = User(name=name, email=email, password=hashed_password, profile_pic=profile_pic)
+    db.session.add(new_user)
+    db.session.commit()
+
+    return jsonify({"message": "User registered successfully"}), 201
+
+  except Exception as e:
+      db.session.rollback()
+      print("Error:", str(e))
+      return jsonify({"error": str(e)}), 500  # Internal server error
