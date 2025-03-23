@@ -8,3 +8,25 @@
 2025-03-23 12:17:47.064 CDT [57204] LOG:  database system is ready to accept connections
 2025-03-23 12:22:47.060 CDT [57205] LOG:  checkpoint starting: time
 2025-03-23 12:22:47.069 CDT [57205] LOG:  checkpoint complete: wrote 3 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.003 s, sync=0.001 s, total=0.009 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/22BBB70, redo lsn=0/22BBB18
+2025-03-23 13:23:23.547 CDT [60582] ERROR:  relation "users" does not exist at character 15
+2025-03-23 13:23:23.547 CDT [60582] STATEMENT:  select * from users;
+2025-03-23 13:23:31.235 CDT [60582] ERROR:  relation "chat.users" does not exist at character 15
+2025-03-23 13:23:31.235 CDT [60582] STATEMENT:  select * from chat.users;
+2025-03-23 14:54:18.252 CDT [62194] FATAL:  role "postgres" does not exist
+2025-03-23 16:28:19.703 CDT [63318] ERROR:  syntax error at or near ";" at character 35
+2025-03-23 16:28:19.703 CDT [63318] STATEMENT:  insert into chatapp.users values(
+	;
+	;
+	);
+2025-03-23 16:29:17.819 CDT [63318] ERROR:  column "Rahul Saini" does not exist at character 57
+2025-03-23 16:29:17.819 CDT [63318] STATEMENT:  insert into chatapp.users(name, email, password) values("Rahul Saini", "sainirahul@gmail.com", "Imthflash");
+2025-03-23 16:32:56.069 CDT [57205] LOG:  checkpoint starting: time
+2025-03-23 16:32:56.897 CDT [57205] LOG:  checkpoint complete: wrote 9 buffers (0.1%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.821 s, sync=0.002 s, total=0.830 s; sync files=6, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/22BBF60, redo lsn=0/22BBF08
+2025-03-23 16:37:42.637 CDT [63318] ERROR:  syntax error at or near "table" at character 13
+2025-03-23 16:37:42.637 CDT [63318] STATEMENT:  delete from table chatapp.users where email = 'sainirahul@gmail.com';
+2025-03-23 16:37:56.899 CDT [57205] LOG:  checkpoint starting: time
+2025-03-23 16:37:57.008 CDT [57205] LOG:  checkpoint complete: wrote 2 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.103 s, sync=0.002 s, total=0.111 s; sync files=2, longest=0.001 s, average=0.001 s; distance=0 kB, estimate=0 kB; lsn=0/22BC198, redo lsn=0/22BC140
+2025-03-23 16:56:23.285 CDT [64492] ERROR:  relation "chatapp.users" does not exist at character 15
+2025-03-23 16:56:23.285 CDT [64492] STATEMENT:  select * from chatapp.users;
+2025-03-23 16:57:56.003 CDT [57205] LOG:  checkpoint starting: time
+2025-03-23 16:57:56.525 CDT [57205] LOG:  checkpoint complete: wrote 6 buffers (0.0%); 0 WAL file(s) added, 0 removed, 0 recycled; write=0.512 s, sync=0.001 s, total=0.525 s; sync files=6, longest=0.001 s, average=0.001 s; distance=4 kB, estimate=4 kB; lsn=0/22BD3A0, redo lsn=0/22BD348
