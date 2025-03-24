@@ -138,7 +138,7 @@ export default function SignIn() {
                   <p className='text-md md:text-lg text-accent'>Already have an account? <Link href="/" className='text-blue-500 cursor-pointer underline font-semibold'>Sign In</Link> to login.</p>
                 </div>
 
-                <form className="p-4 space-y-4" onSubmit={handleSubmit} noValidate>
+              <form className="p-4 space-y-4" onSubmit={handleSubmit} noValidate>
                   <Input label="Full Name" type="text" name="name" value={user.name} onChange={handleChange} error={errors.name}  />
                   <Input label="Email" type="email" name="email" value={user.email} onChange={handleChange} error={errors.email} />
                   <Input label="Password" type="password" name="password" value={user.password} onChange={handleChange} error={errors.password} />
