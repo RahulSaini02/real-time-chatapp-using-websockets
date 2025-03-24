@@ -1,5 +1,5 @@
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 
 load_dotenv()
 
@@ -10,8 +10,6 @@ DB_PORT = os.getenv("DB_PORT")
 DATABASE = os.getenv("DATABASE")
 
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DATABASE}"
-
-print(DATABASE_URL)
 
 class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev")

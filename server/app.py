@@ -4,7 +4,7 @@ from app.routes import routes
 from app.database import db
 
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv # type: ignore
 
 load_dotenv()
 

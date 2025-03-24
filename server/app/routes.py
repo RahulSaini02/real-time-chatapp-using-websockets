@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify
 from app.database import db
 from app.models import User
-from app.utils import hash_password
+from app.utils import hash_password, check_password
 
 routes = Blueprint("routes", __name__)
 
@@ -37,3 +37,37 @@ def register():
       db.session.rollback()
       print("Error:", str(e))
       return jsonify({"error": str(e)}), 500  # Internal server error
+
+#Created a new function(login) and route(/api/login)
+
+@routes.route("/api/login", methods=["POST", "GET"])
+def login():
+    try:
+        data = request.get_json()
+        if not data:
+            return jsonify({"error": "Invalid JSON"}), 400
+            
+        
+        #retriving email and password from data
+        email = data.get("email")
+        password = data.get("password")
+        
+        #Checking if User exists
+        existing_user = User.query.filter_by(email=email).first()
+
+        if not existing_user:
+            return jsonify({"error": "User not registered, Create an Account"}), 404
+        
+        # validating hashed password
+        elif check_password(hash_password(password), existing_user.password):
+            return jsonify({"error": "Invalid password"}), 401
+        else:
+            return jsonify({"message": "Login successful"}), 200
+        
+
+   
+    except Exception as e:
+        db.session.rollback()
+        print("Error:", str(e))
+        return jsonify({"error": str(e)}), 500  # Internal server error
+    
