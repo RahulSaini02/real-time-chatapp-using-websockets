@@ -54,18 +54,21 @@ def login():
         
         #Checking if User exists
         existing_user = User.query.filter_by(email=email).first()
+        print("existing_user:",existing_user)
+        print("password:",password)
+        print(check_password(hash_password(password), existing_user.password))
+        print(check_password(hash_password("1234567"), existing_user.password))
+
 
         if not existing_user:
             return jsonify({"error": "User not registered, Create an Account"}), 404
         
         # validating hashed password
-        elif check_password(hash_password(password), existing_user.password):
+        if not check_password(password, existing_user.password)==True:
             return jsonify({"error": "Invalid password"}), 401
-        else:
-            return jsonify({"message": "Login successful"}), 200
         
-
-   
+        return jsonify({"message": "Login successful"}), 200
+          
     except Exception as e:
         db.session.rollback()
         print("Error:", str(e))
