@@ -54,12 +54,7 @@ def login():
         
         #Checking if User exists
         existing_user = User.query.filter_by(email=email).first()
-        print("existing_user:",existing_user)
-        print("password:",password)
-        print(check_password(hash_password(password), existing_user.password))
-        print(check_password(hash_password("1234567"), existing_user.password))
-
-
+``
         if not existing_user:
             return jsonify({"error": "User not registered, Create an Account"}), 404
         

@@ -1,6 +1,6 @@
 "use client";
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Input } from '@/components/Util/Input';
 import { FaSearch } from "react-icons/fa";
 import Image from 'next/image';
@@ -11,107 +11,37 @@ export const ChatInbox = () => {
         name: 'Sateesh',
         lastMessage: 'Hello',
         time: '12:00',
-        profilePic: '/globe.svg'
+        profilePic: '/profile.jpg'
         },
         {
             id: 2,
             name: 'Nithya',
             lastMessage: 'How are you',
             time: '01:00',
-            profilePic: '/globe.svg'
+            profilePic: '/profile.jpg'
         },
         {
             id: 3,
             name: 'Rahul',
             lastMessage: 'How are you',
             time: '01:00',
-            profilePic: '/globe.svg'
+            profilePic: '/profile.jpg'
         },
-        {
-            id: 4,
-            name: 'Manisha',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        },
-        {
-            id: 5,
-            name: 'Geetha',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        },
-        {
-            id: 6,
-            name: 'Nithya',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        },
-        {
-            id: 7,
-            name: 'Rahul',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        },
-        {
-            id: 8,
-            name: 'Manisha',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        },
-        {
-            id: 9,
-            name: 'Geetha',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        },
-        {
-            id: 10,
-            name: 'Nithya',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        },
-        {
-            id: 11,
-            name: 'Rahul',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        },
-        {
-            id: 12,
-            name: 'Manisha',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        },
-        {
-            id: 13,
-            name: 'Geetha',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        },
-        {
-            id: 14,
-            name: 'Geetha',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        },
-        {
-            id: 15,
-            name: 'Geetha',
-            lastMessage: 'How are you',
-            time: '01:00',
-            profilePic: '/globe.svg'
-        }
     ]
+
+    
+
+    const [searchInput, setSearchInput] = useState("")
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value } = event.target;
+    setSearchInput(value)
+    const usersCopy = users.filter((user) => user.name === value)
+    
+    console.log(usersCopy)
+    };
+
+    
  
   return (
     // Main Div
@@ -124,9 +54,9 @@ export const ChatInbox = () => {
                 <Input 
                     label=''
                     type='text'
-                    name='search_user'
-                    value=''
-                    onChange={(e) => console.log(e.target.value)}
+                    name='search'
+                    value={searchInput}
+                    onChange={handleChange}
                 />
                 <FaSearch className='absolute top-1/2 left-3 transform -translate-y-1/2 text-muted'/>
             </div>

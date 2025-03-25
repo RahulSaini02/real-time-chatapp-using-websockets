@@ -1,4 +1,5 @@
 import { ChatInbox } from '@/components/UI/Chat/ChatInbox'
+import { ChatWindow } from '@/components/UI/Chat/ChatWindow'
 import React from 'react'
 
 const chat = () => {
@@ -8,7 +9,7 @@ const chat = () => {
         <ChatInbox />
       </div>
       <div className='grid col-span-9 bg-white/70'>
-        {/* <ChatWindow /> */}
+        <ChatWindow />
       </div>
     </div>
   )
