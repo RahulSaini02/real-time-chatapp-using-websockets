@@ -27,3 +27,15 @@ body {
   color: var(--color-foreground);
   font-family: var(--font-sans);
 }
+
+.cursor-pointer {
+  transition: background 0.2s ease-in-out;
+}
+
+.cursor-pointer:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.active {
+  background: rgba(0, 0, 0, 0.1);
+}
