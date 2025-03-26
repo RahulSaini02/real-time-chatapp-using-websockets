@@ -1,17 +1,17 @@
 "use client";
 
-import { ChatInbox } from '@/components/UI/Chat/ChatInbox'
-import { ChatWindow } from '@/components/UI/Chat/ChatWindow'
-import React, { useState } from 'react'
-import { User } from '@/types';
+import { ChatInbox } from "@/components/UI/Chat/ChatInbox";
+import { ChatWindow } from "@/components/UI/Chat/ChatWindow";
+import React, { useState } from "react";
+import { User } from "@/types";
 
 const Chat = () => {
   const users: User[] = [
     {
       id: 1,
-      name: 'Sam',
-      profile_pic: '/sam.jpg',
-      status: 'Online',
+      name: "Sam",
+      profile_pic: "/sam.jpg",
+      status: "Online",
       messages: [
         {
           id: 1,
@@ -55,12 +55,12 @@ const Chat = () => {
           time: "18:08",
           status: "sent",
         },
-      ]
+      ],
     },
     {
       id: 2,
-      name: "Mary",
-      profile_pic: "/mary.jpg",
+      name: "Molly",
+      profile_pic: "/molly.jpg",
       status: "Online",
       messages: [
         {
@@ -115,22 +115,22 @@ const Chat = () => {
       ],
     },
   ];
-  const [selectedUserId, setSelectedUserId] = useState( 1 );
+  const [selectedUserId, setSelectedUserId] = useState<number>(0);
 
-  const handleSelectedUser = ( id: number ) => {
-    setSelectedUserId( id )
-  }
+  const handleSelectedUser = (id: number) => {
+    setSelectedUserId(id);
+  };
 
   return (
-    <div className= "min-h-screen font-[family-name:var(--font-nunito-sans)] bg-white/90 grid grid-cols-12 text-secondary" >
-      <div className='grid col-span-3 bg-white' >
-        <ChatInbox users={ users } handleSelectedUser = { handleSelectedUser } />
-          </div>
-          <div className = 'grid col-span-9 bg-white/70' >
-            <ChatWindow users={ users } selectedUserId = { selectedUserId } />
-        </div>
+    <div className="min-h-screen font-[family-name:var(--font-nunito-sans)] bg-white/90 grid grid-cols-12 text-secondary">
+      <div className="grid col-span-3 bg-white">
+        <ChatInbox users={users} handleSelectedUser={handleSelectedUser} />
+      </div>
+      <div className="grid col-span-9 bg-white/70">
+        <ChatWindow users={users} selectedUserId={selectedUserId} />
+      </div>
     </div>
-  )
-}
+  );
+};
 
 export default Chat;
