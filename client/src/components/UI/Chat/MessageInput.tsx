@@ -23,6 +23,7 @@ export const MessageInput = () => {
           value={messageInput}
           className=" flex-1 px-3 py-2 text-secondary text-base outline-none caret-green-700"
           onChange={(e) => setMessageInput(e.target.value)}
+          autoComplete="off"
         />
         <div>
           <button

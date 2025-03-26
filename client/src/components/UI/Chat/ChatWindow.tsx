@@ -1,4 +1,6 @@
 import React from "react";
+import { FaWhatsapp } from "react-icons/fa";
+
 import { User } from "@/types";
 import { ChatMessage } from "./ChatMessage";
 import { MessageInput } from "./MessageInput";
@@ -15,9 +17,12 @@ export const ChatWindow = ({
 
   if (!user) {
     return (
-      <p className="flex justify-center place-items-center min-h-screen bg-white/60 text-accent font-semibold p-4 text-5xl">
-        WhatsApp for Users
-      </p>
+      <div className="flex flex-col space-y-4 min-h-screen justify-center place-items-center">
+        <FaWhatsapp className="h-36 w-36 text-accent/60" />
+        <p className=" text-accent/70 font-semibold p-4 text-5xl">
+          WhatsApp for Web
+        </p>
+      </div>
     );
   }
 
