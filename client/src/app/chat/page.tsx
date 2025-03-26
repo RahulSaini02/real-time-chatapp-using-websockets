@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatInbox } from "@/components/UI/Chat/ChatInbox";
+import { ChatInbox } from "@/components/UI/Chat/Inbox";
 import { ChatWindow } from "@/components/UI/Chat/ChatWindow";
 import React, { useState } from "react";
 import { User } from "@/types";

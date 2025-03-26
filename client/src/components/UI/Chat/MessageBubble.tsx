@@ -9,7 +9,7 @@ interface MessageType {
   status: string;
 }
 
-export const ChatMessage = ({
+export const MessageBubble = ({
   currentUser,
   message,
 }: {

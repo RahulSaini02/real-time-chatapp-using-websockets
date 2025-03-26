@@ -1,9 +1,9 @@
 import React from "react";
 import { User } from "@/types";
-import { ChatSearch } from "./ChatSearch";
-import { ChatInboxItem } from "./ChatInboxItem";
+import { InboxHeader } from "./InboxHeader";
+import { InboxParticipant } from "./InboxParticipant";
 
-export const ChatInbox = ({
+export const Inbox = ({
   users,
   handleSelectedUser,
 }: {
@@ -27,10 +27,8 @@ export const ChatInbox = ({
   });
   return (
     <div className="flex flex-col bg-white min-h-screen border border-r-1 border-accent">
-      {/* Div consist  Main Heading and search box*/}
-      <h3 className="text-2xl font-bold text-secondary p-4 pb-1">Chats</h3>
-      {/* Component for search box */}
-      <ChatSearch users={users} />
+      {/* Component for Main Heading & search box */}
+      <InboxHeader users={users} />
       {/* Users List */}
       <div className="flex flex-1 flex-col p-2 overflow-y-auto">
         {formattedUsers.length === 0 ? (
@@ -43,7 +41,7 @@ export const ChatInbox = ({
               className={`${index == users.length - 1 ? "mb-10" : "mb-0"}`}
               onClick={() => handleSelectedUser(user.id)}
             >
-              <ChatInboxItem user={user} />
+              <InboxParticipant user={user} />
             </div>
           ))
         )}

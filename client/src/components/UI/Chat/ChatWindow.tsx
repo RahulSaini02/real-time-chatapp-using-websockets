@@ -2,9 +2,9 @@ import React from "react";
 import { FaWhatsapp } from "react-icons/fa";
 
 import { User } from "@/types";
-import { ChatMessage } from "./ChatMessage";
+import { MessageBubble } from "./MessageBubble";
 import { MessageInput } from "./MessageInput";
-import { ChatWindowHeader } from "./ChatWindowHeader";
+import { WindowHeader } from "./WindowHeader";
 
 export const ChatWindow = ({
   users,
@@ -29,11 +29,11 @@ export const ChatWindow = ({
   return (
     <div className="bg-[url('/whatsapp_background.png')] flex flex-col max-h-screen">
       {/* Header */}
-      <ChatWindowHeader user={user} />
+      <WindowHeader user={user} />
       {/* Messages */}
       <div className="flex-1 flex-col space-y-4 p-4 overflow-scroll">
         {user?.messages?.map((message) => (
-          <ChatMessage key={message.id} currentUser="Roy" message={message} />
+          <MessageBubble key={message.id} currentUser="Roy" message={message} />
         ))}
       </div>
       {/* Text Input Area */}

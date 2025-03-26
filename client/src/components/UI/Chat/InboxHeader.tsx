@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { User } from "@/types";
 
-export const ChatSearch = ({ users }: { users: User[] }) => {
+export const InboxHeader = ({ users }: { users: User[] }) => {
   const [searchInput, setSearchInput] = useState("");
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = event.target;
@@ -18,6 +18,7 @@ export const ChatSearch = ({ users }: { users: User[] }) => {
 
   return (
     <div className="relative w-full p-2 rounded">
+      <h3 className="text-2xl font-bold text-secondary p-4 pb-1">Chats</h3>
       <input
         type="text"
         name="search"

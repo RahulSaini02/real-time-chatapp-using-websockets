@@ -3,7 +3,7 @@ import Image from "next/image";
 import React from "react";
 import { IoSearchOutline } from "react-icons/io5";
 
-export const ChatWindowHeader = ({ user }: { user: User }) => {
+export const WindowHeader = ({ user }: { user: User }) => {
   return (
     <header className="flex justify-between place-items-center px-4 py-2 border-b-1 border-muted/30 bg-[#f4f4f4] max-h-16">
       <div className="flex space-x-4 h-12 cursor-pointer">
