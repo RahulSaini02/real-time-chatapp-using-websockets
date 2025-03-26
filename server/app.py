@@ -4,7 +4,7 @@ from app.routes import routes
 from app.database import db
 
 import os
-from dotenv import load_dotenv # type: ignore
+from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -12,10 +12,6 @@ app = create_app()
 
 app.config.from_object(Config)
 db.init_app(app)
-
-# with app.app_context():
-#     db.create_all()  # Ensures tables exist before first request
-
 app.register_blueprint(routes)
 
 debug = os.getenv("FLASK_DEBUG") == "TRUE"  # Convert string to boolean
