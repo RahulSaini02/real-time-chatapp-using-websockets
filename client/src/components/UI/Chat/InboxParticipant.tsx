@@ -14,7 +14,7 @@ interface InboxUser {
 
 export const InboxParticipant = ({ user }: { user: InboxUser }) => {
   return (
-    <div className="flex gap-4 items-center p-2 py-4 cursor-pointer rounded-lg bg-white hover:bg-stone-100 max-h-24">
+    <div className="flex gap-4 items-center p-2 py-4 cursor-pointer rounded-lg bg-white hover:bg-gray-100 max-h-24">
       <Image
         alt={user?.name || ""}
         src={user?.profile_pic || ""}

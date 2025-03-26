@@ -10,7 +10,7 @@ export const Inbox = ({
   users: User[];
   handleSelectedUser: (id: number) => void;
 }) => {
-  const formattedUsers = users.map((user) => {
+  const formattedUsers = users?.map((user) => {
     const lastMessage = user.messages[user.messages.length - 1]; // Get last message
     const unreadCount = user.messages.filter(
       (msg) => msg.status !== "read"

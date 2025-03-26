@@ -1,6 +1,6 @@
 "use client";
 
-import { ChatInbox } from "@/components/UI/Chat/Inbox";
+import { Inbox } from "@/components/UI/Chat/Inbox";
 import { ChatWindow } from "@/components/UI/Chat/ChatWindow";
 import React, { useState } from "react";
 import { User } from "@/types";
@@ -59,7 +59,7 @@ const Chat = () => {
     },
     {
       id: 2,
-      name: "Molly",
+      name: "Monica",
       profile_pic: "/molly.jpg",
       status: "Online",
       messages: [
@@ -124,7 +124,7 @@ const Chat = () => {
   return (
     <div className="min-h-screen font-[family-name:var(--font-nunito-sans)] bg-white/90 grid grid-cols-12 text-secondary">
       <div className="grid col-span-3 bg-white">
-        <ChatInbox users={users} handleSelectedUser={handleSelectedUser} />
+        <Inbox users={users} handleSelectedUser={handleSelectedUser} />
       </div>
       <div className="grid col-span-9 bg-white/70">
         <ChatWindow users={users} selectedUserId={selectedUserId} />
