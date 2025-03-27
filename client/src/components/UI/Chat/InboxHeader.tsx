@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaSearch } from "react-icons/fa";
 import { User } from "@/types";
+import { NewChatInput } from "./NewChatInput";
 
 export const InboxHeader = ({ users }: { users: User[] }) => {
   const [searchInput, setSearchInput] = useState("");
@@ -18,9 +19,12 @@ export const InboxHeader = ({ users }: { users: User[] }) => {
 
   return (
     <div className="w-full p-2 rounded">
-      <h3 className="text-2xl font-bold text-secondary px-2 py-4 mb-2">
-        Chats
-      </h3>
+      <div className="flex place-items-center justify-between px-2 py-4 mb-2">
+        <h3 className="text-2xl font-bold text-secondary">
+          Chats
+        </h3>
+        <NewChatInput />
+      </div>
       <div className="relative flex place-items-center">
         <input
           type="text"
