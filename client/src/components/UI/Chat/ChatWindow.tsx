@@ -27,7 +27,7 @@ export const ChatWindow = ({
   }
 
   return (
-    <div className="bg-[url('/whatsapp_background.png')] flex flex-col max-h-screen">
+    <div className="bg-[url('/backgrounds/whatsapp_background.png')] flex flex-col max-h-screen">
       {/* Header */}
       <WindowHeader user={user} />
       {/* Messages */}

@@ -2,7 +2,7 @@
 
 import { Inbox } from "@/components/UI/Chat/Inbox";
 import { ChatWindow } from "@/components/UI/Chat/ChatWindow";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { User } from "@/types";
 
 const Chat = () => {
@@ -116,10 +116,32 @@ const Chat = () => {
     },
   ];
   const [selectedUserId, setSelectedUserId] = useState<number>(0);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [usersList, setUsersList] = useState([]);
 
   const handleSelectedUser = (id: number) => {
     setSelectedUserId(id);
   };
+
+  const getUsers = async () => {
+    const response = await fetch("/api/users", {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    });
+
+    // Geting response from API
+    const data = await response.json();
+
+    // Handing Response
+    if (response.ok) {
+      setUsersList(data.data);
+      console.log(data.data);
+    }
+  };
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
   return (
     <div className="min-h-screen font-[family-name:var(--font-nunito-sans)] bg-white/90 grid grid-cols-12 text-secondary">

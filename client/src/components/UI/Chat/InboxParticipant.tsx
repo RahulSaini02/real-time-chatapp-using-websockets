@@ -17,7 +17,7 @@ export const InboxParticipant = ({ user }: { user: InboxUser }) => {
     <div className="flex gap-4 items-center p-2 py-4 cursor-pointer rounded-lg bg-white hover:bg-gray-100 max-h-24">
       <Image
         alt={user?.name || ""}
-        src={user?.profile_pic || ""}
+        src={`/profiles${user?.profile_pic}` || "/profiles/default.png"}
         className="rounded-full object-cover aspect-square"
         width={60}
         height={60}
