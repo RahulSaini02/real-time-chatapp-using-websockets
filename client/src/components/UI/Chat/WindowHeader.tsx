@@ -9,7 +9,7 @@ export const WindowHeader = ({ user }: { user: User }) => {
       <div className="flex space-x-4 h-12 cursor-pointer">
         <Image
           alt={user?.name || ""}
-          src={user?.profile_pic || ""}
+          src={`/profiles${user?.profile_pic}` || "/profiles/default.png"}
           className="rounded-full aspect-square object-cover"
           width={50}
           height={50}
