@@ -2,13 +2,16 @@ select * from chatapp.users; -- 984c4ac2-504d-4f68-bfae-ca0c35f221ad, 6f23d210-9
 select * from chatapp.chats;
 select * from chatapp.chat_participants;
 
-DELETE from chatapp.chats;
+DELETE from chatapp.chats where chat_id='cda9a0b3-983c-4c76-a075-314a6be591f2';
 
 INSERT INTO chatapp.chats(IS_GROUP) VALUES('FALSE'); --b394c8bb-d340-46ea-8e7f-16a00278a963
 
 INSERT INTO chatapp.chat_participants(chat_id, user_id) VALUES 
 ('b394c8bb-d340-46ea-8e7f-16a00278a963', '984c4ac2-504d-4f68-bfae-ca0c35f221ad'),
 ('b394c8bb-d340-46ea-8e7f-16a00278a963', '6f23d210-9312-4639-a085-a17e47c3b2ab');
+
+[Feature] Implement Chat Page (#4)
+
 
 
 DELETE FROM chatapp.chat_participants where chat_id = 'b394c8bb-d340-46ea-8e7f-16a00278a963';
@@ -30,6 +33,8 @@ SELECT
 	cp.name
 FROM 
 	chatapp.chats c
+WHERE 
+	is_group = 'false'
 INNER JOIN
 (
 SELECT 
