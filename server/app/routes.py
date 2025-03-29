@@ -6,7 +6,7 @@ from app.utils import hash_password, check_password
 routes = Blueprint("routes", __name__)
 
 
-@routes.route("/api/register", methods=["POST"])
+@routes.route("/api/auth/register", methods=["POST"])
 def register():
   try:
     data = request.get_json()
@@ -40,7 +40,7 @@ def register():
       return jsonify({"error": str(e)}), 500  # Internal server error
 
 #Created a new function(login) and route(/api/login)
-@routes.route("/api/login", methods=["POST" ])
+@routes.route("/api/auth/login", methods=["POST" ])
 def login():
     try:
         data = request.get_json()
