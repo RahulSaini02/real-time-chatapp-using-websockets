@@ -60,7 +60,7 @@ export const RegisterForm = () => {
     event.preventDefault();
 
     if (validateForm()) {
-      const response = await fetch("/api/register", {
+      const response = await fetch("/api/auth/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(user),
