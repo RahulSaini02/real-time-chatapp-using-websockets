@@ -1,18 +1,34 @@
 import { NextRequest, NextResponse } from "next/server";
+import { cookies } from "next/headers";
 
 //Creating a post function
 export async function POST(req: NextRequest) {
   try {
     //Getting form data from fronted login page in JSON format
     const body = await req.json();
-    //Sending the data to flask API(/api/login)
-    const response = await fetch("http://127.0.0.1:8080/api/auth/login", {
+
+    // Fetching backend API URL from .env
+    const BACKEND_API =
+      process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8080/api";
+
+    //Sending the data to flask API(/auth/login)
+    const response = await fetch(`${BACKEND_API}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
     });
     // Getting data from the backend
     const data = await response.json();
+    console.log(data);
+
+    const cookieStore = await cookies();
+    cookieStore.set("accessToken", data.token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "strict",
+      path: "/",
+    });
+
     // Validating the response
     if (!response.ok) {
       return NextResponse.json(
