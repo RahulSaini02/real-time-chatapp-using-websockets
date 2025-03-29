@@ -22,11 +22,7 @@ def createJWT(email, secret, authz):
 
 def decodeJWT(encoded_jwt, secret):
     try:
-        decoded_jwt = jwt.decode(
-                encoded_jwt, 
-                secret, 
-                algorithms="HS256"
-        )
+        decoded_jwt = jwt.decode(encoded_jwt, secret, algorithms=["HS256"])
         return decoded_jwt
     except jwt.ExpiredSignatureError:
         return {"error": "Token has expired"}

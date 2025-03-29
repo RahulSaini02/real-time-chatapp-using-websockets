@@ -10,7 +10,7 @@ chat_routes = Blueprint("chat_routes", __name__)
 
 # User Registration API
 
-@chat_routes.route("/api/chats", methods=["POST"])
+@chat_routes.route("/api/chats/new", methods=["POST"])
 def new_chat():
   try:
     data = request.get_json()

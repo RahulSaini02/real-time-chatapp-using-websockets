@@ -93,7 +93,12 @@ def validate():
 
         # Decode JWT
         decoded = decodeJWT(token, jwt_secret)
+        print(decoded)
+
+        if "error" in decoded and decoded["error"] is not None:
+            return jsonify({"error": decoded["error"]}), 401
+
         return jsonify({"message": "Authorized", "data": decoded}), 200
 
     except Exception as e:
-        return jsonify({"error": "Not authorized", "details": str(e)}), 403
+        return jsonify({"error": "Unauthorized"}), 401
