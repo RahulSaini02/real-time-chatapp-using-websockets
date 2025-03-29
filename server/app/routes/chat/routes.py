@@ -31,11 +31,12 @@ def new_chat():
 
     a = aliased(ChatParticipants)
     b = aliased(ChatParticipants)  
+
     query = (
       select(a.chat_id, a.user_id.label("user1"), b.user_id.label("user2"))
       .select_from(a)
       .join(b, a.chat_id == b.chat_id)
-      .where(a.user_id == sender_user_id)
+      .where(a.user_id == sender_user_id and a.is_group == false)
       .where(b.user_id == recipent_user_id)
       .distinct()
     )
