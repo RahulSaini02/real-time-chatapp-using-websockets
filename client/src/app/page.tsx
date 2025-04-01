@@ -3,8 +3,18 @@
 import Image from "next/image";
 import { LoginForm } from "@/components/UI/Auth/LoginForm";
 import { AuthContainerImage } from "@/components/UI/Auth/AuthContainerImage";
+import { useEffect } from "react";
+import { socket } from "./socket";
 
 const SignIn = () => {
+  useEffect(() => {
+    // client-side
+    socket.on("connect", () => {
+      socket.emit("my event", { data: "I'm connected!" });
+      console.log(socket.connected);
+    });
+  }, []);
+
   return (
     <div className="min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-nunito-sans)] bg-white/90">
       {/* Overlay */}

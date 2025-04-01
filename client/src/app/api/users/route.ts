@@ -3,9 +3,9 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     const BACKEND_API =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8080/api";
+      process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8080";
 
-    const response = await fetch(`${BACKEND_API}/users`, {
+    const response = await fetch(`${BACKEND_API}/api/users`, {
       method: "GET",
       headers: { "Content-Type": "application/json" },
     });

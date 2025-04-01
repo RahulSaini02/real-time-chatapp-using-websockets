@@ -5,9 +5,9 @@ export async function POST(req: NextRequest) {
     const body = await req.json();
 
     const BACKEND_API =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8080/api";
+      process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8080";
 
-    const response = await fetch(`${BACKEND_API}/auth/register`, {
+    const response = await fetch(`${BACKEND_API}/api/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),

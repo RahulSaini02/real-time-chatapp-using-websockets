@@ -1,20 +1,14 @@
 import React from "react";
 import { FaCheck, FaCheckDouble } from "react-icons/fa";
-
-interface MessageType {
-  id: number;
-  text: string;
-  sender: string;
-  time: string;
-  status: string;
-}
+import { Message } from "@/types";
+import { getTimeFromTimeStamp } from "@/utils/TimeStampConversion";
 
 export const MessageBubble = ({
   currentUser,
   message,
 }: {
   currentUser: string;
-  message: MessageType;
+  message: Message;
 }) => {
   return (
     <div
@@ -32,7 +26,9 @@ export const MessageBubble = ({
         <div
           className={`absolute right-2 bottom-2 flex items-center space-x-1 text-muted font-semibold text-sm`}
         >
-          <span className="whitespace-nowrap">{message.time}</span>
+          <span className="whitespace-nowrap">
+            {getTimeFromTimeStamp(message.timestamp)}
+          </span>
           {currentUser == message.sender && message.status === "sent" && (
             <FaCheck className="text-muted" />
           )}

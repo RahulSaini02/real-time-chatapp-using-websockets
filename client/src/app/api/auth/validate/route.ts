@@ -11,9 +11,9 @@ export async function POST() {
   }
 
   const BACKEND_API =
-    process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8080/api";
+    process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8080";
 
-  const response = await fetch(`${BACKEND_API}/auth/validate`, {
+  const response = await fetch(`${BACKEND_API}/api/auth/validate`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

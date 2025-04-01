@@ -5,6 +5,7 @@ import { User } from "@/types";
 import { MessageBubble } from "./MessageBubble";
 import { MessageInput } from "./MessageInput";
 import { WindowHeader } from "./WindowHeader";
+import { ChatStartDate } from "./ChatStartDate";
 
 export const ChatWindow = ({
   users,
@@ -33,7 +34,12 @@ export const ChatWindow = ({
       {/* Messages */}
       <div className="flex-1 flex-col space-y-4 p-4 overflow-scroll">
         {user?.messages?.map((message) => (
-          <MessageBubble key={message.id} currentUser="Roy" message={message} />
+          <div key={message.id}>
+            <div className="flex justify-center place-items-center">
+              <ChatStartDate timestamp={message.timestamp} />
+            </div>
+            <MessageBubble currentUser="Roy" message={message} />
+          </div>
         ))}
       </div>
       {/* Text Input Area */}

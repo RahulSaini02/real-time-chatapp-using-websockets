@@ -9,10 +9,10 @@ export async function POST(req: NextRequest) {
 
     // Fetching backend API URL from .env
     const BACKEND_API =
-      process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8080/api";
+      process.env.NEXT_PUBLIC_BACKEND_URL || "http://127.0.0.1:8080";
 
     //Sending the data to flask API(/auth/login)
-    const response = await fetch(`${BACKEND_API}/auth/login`, {
+    const response = await fetch(`${BACKEND_API}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
