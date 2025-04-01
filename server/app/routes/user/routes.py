@@ -26,7 +26,7 @@ def users(user_id=None):
             # Fetch all users if no ID or email is given
             users = User.query.all()
             if not users:
-                return jsonify({"error": "No users found!"}), 400
+                return jsonify({"error": "No users found!"}), 404
 
             user_list = [
                 {"user_id": user.user_id, "name": user.name, "email": user.email, "profile_pic": user.profile_pic}

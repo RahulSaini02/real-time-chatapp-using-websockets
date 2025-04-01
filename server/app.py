@@ -1,5 +1,6 @@
 from app import create_app
 from app.config import Config
+from app.sockets import socketio
 
 from app.routes.auth.routes import auth_routes
 from app.routes.chat.routes import chat_routes
@@ -16,13 +17,14 @@ app = create_app()
 
 app.config.from_object(Config)
 db.init_app(app)
+socketio.init_app(app)
 
 app.register_blueprint(auth_routes)
 app.register_blueprint(chat_routes)
 app.register_blueprint(user_routes)
 
-debug = os.getenv("FLASK_DEBUG") == "TRUE"  # Convert string to boolean
-port = int(os.getenv("FLASK_PORT", 8080))  # Ensure port is an integer
+PORT = int(os.getenv("FLASK_PORT", 8080)) 
 
 if __name__ == "__main__":
-    app.run(debug=debug, port=port)
+    # app.run(debug=debug, port=port)
+    socketio.run(app, port=PORT)
