@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
+import { socket } from "@/lib/socket";
 
 export const MessageInput = () => {
   const [messageInput, setMessageInput] = useState("");
@@ -14,8 +15,21 @@ export const MessageInput = () => {
     setShowPicker(false); // Hide picker after selection
   };
 
+  const handleSendMessage = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    if (messageInput) {
+      socket.emit("message", messageInput);
+      setMessageInput("");
+    }
+  };
+
   return (
-    <form className="flex space-x-2 px-4 py-3 bg-gray-100">
+    <form
+      className="flex space-x-2 px-4 py-3 bg-gray-100"
+      onSubmit={handleSendMessage}
+      noValidate
+    >
       <div className="flex justify-between place-items-center w-full bg-white border border-gray-300 rounded-full">
         <input
           type="text"
@@ -42,8 +56,8 @@ export const MessageInput = () => {
         </div>
       </div>
       <button
-        type="submit"
         className="bg-primary hover:bg-green-600 text-white rounded-full flex justify-between place-items-center p-2 cursor-pointer"
+        type="submit"
       >
         <IoSend className="h-6 w-6" />
       </button>

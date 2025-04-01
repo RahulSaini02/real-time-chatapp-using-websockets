@@ -4,6 +4,7 @@ import { Inbox } from "@/components/UI/Chat/Inbox";
 import { ChatWindow } from "@/components/UI/Chat/ChatWindow";
 import React, { useEffect, useState } from "react";
 import { User } from "@/types";
+import { socket } from "@/lib/socket";
 
 const Chat = () => {
   const users: User[] = [
@@ -159,11 +160,53 @@ const Chat = () => {
   ];
   const [selectedUserId, setSelectedUserId] = useState<number>(0);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [usersList, setUsersList] = useState(users);
+  const [isConnected, setIsConnected] = useState(false);
+
+  // const [usersList, setUsersList] = useState(users);
 
   const handleSelectedUser = (id: number) => {
     setSelectedUserId(id);
+    joinChat(id);
   };
+
+  const getUser = (user_id: number) => {
+    return users.find((user) => user.id == user_id);
+  };
+
+  const joinChat = (id: number) => {
+    console.log(`Join Chat: ${id}`);
+
+    const currentUser = getUser(id);
+
+    if (currentUser) {
+      socket.emit("join", {
+        username: currentUser?.name,
+        room: currentUser?.id,
+      });
+    }
+  };
+
+  useEffect(() => {
+    if (socket.connected) {
+      onConnect();
+    }
+
+    function onConnect() {
+      setIsConnected(true);
+    }
+
+    function onDisconnect() {
+      setIsConnected(false);
+    }
+
+    socket.on("connect", onConnect);
+    socket.on("disconnect", onDisconnect);
+
+    return () => {
+      socket.off("connect", onConnect);
+      socket.off("disconnect", onDisconnect);
+    };
+  }, []);
 
   // const getUsers = async () => {
   //   const response = await fetch("/api/users", {

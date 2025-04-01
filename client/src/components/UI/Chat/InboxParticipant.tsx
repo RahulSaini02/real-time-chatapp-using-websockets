@@ -1,13 +1,14 @@
 import React from "react";
 import Image from "next/image";
 import { FaCheck, FaCheckDouble } from "react-icons/fa";
+import { getTimeFromTimeStamp } from "@/utils/TimeStampConversion";
 
 interface InboxUser {
   id: number;
   name: string;
   lastMessage: string;
   status: string;
-  time: string;
+  timestamp: string;
   profile_pic: string;
   unreadCount: number;
 }
@@ -36,7 +37,7 @@ export const InboxParticipant = ({ user }: { user: InboxUser }) => {
         <span
           className={`${user.unreadCount > 0 ? "text-green-500" : "text-accent"} text-sm font-medium`}
         >
-          {user.time}
+          {getTimeFromTimeStamp(user.timestamp)}
         </span>
         {user.unreadCount > 0 ? (
           <span className="mt-1 bg-green-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">

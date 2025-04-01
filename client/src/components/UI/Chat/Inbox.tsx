@@ -20,11 +20,12 @@ export const Inbox = ({
       name: user.name,
       lastMessage: lastMessage?.text || "", // Handle case where no messages exist
       status: lastMessage?.status || "sent",
-      time: lastMessage?.time || "",
+      timestamp: lastMessage?.timestamp || "",
       profile_pic: user.profile_pic,
       unreadCount: unreadCount,
     };
   });
+
   return (
     <div className="flex flex-col bg-white min-h-screen border border-r-1 border-accent">
       {/* Component for Main Heading & search box */}
