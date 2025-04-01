@@ -74,3 +74,5 @@ CREATE TABLE IF NOT EXISTS chatapp.message_status (
 );
 
 CREATE INDEX IF NOT EXISTS idx_message_status_message_id ON chatapp.message_status(message_id);
+
+`

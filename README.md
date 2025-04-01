@@ -35,11 +35,7 @@ project-root/
 
 ### **Cloud Services**
 
-- **AWS Lambda**
-- **AWS API Gateway**
-- **AWS DynamoDB**
 - **AWS S3** (for media storage)
-- **AWS SNS** (for notifications)
 
 ## Getting Started
 
@@ -131,14 +127,4 @@ In the .env file, update:
 
 ```python
 DATABASE_URL=postgresql://chat_user:securepassword@localhost/chat_app
-```
-
-#### 5️⃣ Apply Database Migrations
-
-If using SQLAlchemy with Flask-Migrate, run:
-
-```bash
-flask db init
-flask db migrate -m "Initial migration"
-flask db upgrade
 ```
