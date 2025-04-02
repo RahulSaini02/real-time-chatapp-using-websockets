@@ -5,38 +5,47 @@ import { MdOutlineEmojiEmotions } from "react-icons/md";
 import { IoSend } from "react-icons/io5";
 import EmojiPicker, { EmojiClickData } from "emoji-picker-react";
 import { socket } from "@/lib/socket";
+import { useUser } from "@/context/UserContext";
 
-export const MessageInput = () => {
-  const [messageInput, setMessageInput] = useState("");
+export const MessageInput = ({ chat_id }: { chat_id: string }) => {
+  const { currentUser } = useUser();
+  const [text, setText] = useState("");
   const [showPicker, setShowPicker] = useState(false);
 
   const handleEmojiClick = (emojiData: EmojiClickData) => {
-    setMessageInput((prevMessage) => prevMessage + emojiData.emoji);
+    setText((prevMessage) => prevMessage + emojiData.emoji);
     setShowPicker(false); // Hide picker after selection
   };
 
-  const handleSendMessage = async (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const sendMessage = () => {
+    if (!chat_id || !currentUser) return;
 
-    if (messageInput) {
-      socket.emit("message", messageInput);
-      setMessageInput("");
+    if (text) {
+      socket.emit("send_message", {
+        room: chat_id,
+        sender: currentUser?.name,
+        message: text,
+      });
+      setText("");
+    }
+  };
+
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      sendMessage();
     }
   };
 
   return (
-    <form
-      className="flex space-x-2 px-4 py-3 bg-gray-100"
-      onSubmit={handleSendMessage}
-      noValidate
-    >
+    <div className="flex space-x-2 px-4 py-3 bg-gray-100">
       <div className="flex justify-between place-items-center w-full bg-white border border-gray-300 rounded-full">
         <input
           type="text"
           name="message-input"
-          value={messageInput}
+          value={text}
           className=" flex-1 px-3 py-2 text-secondary text-base outline-none caret-green-700"
-          onChange={(e) => setMessageInput(e.target.value)}
+          onChange={(e) => setText(e.target.value)}
+          onKeyDown={handleKeyPress}
           autoComplete="off"
         />
         <div>
@@ -57,10 +66,10 @@ export const MessageInput = () => {
       </div>
       <button
         className="bg-primary hover:bg-green-600 text-white rounded-full flex justify-between place-items-center p-2 cursor-pointer"
-        type="submit"
+        onClick={sendMessage}
       >
         <IoSend className="h-6 w-6" />
       </button>
-    </form>
+    </div>
   );
 };

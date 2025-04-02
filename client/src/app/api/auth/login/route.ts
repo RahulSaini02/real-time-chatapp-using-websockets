@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
     });
     // Getting data from the backend
     const data = await response.json();
-    console.log(data);
 
     const cookieStore = await cookies();
     cookieStore.set("accessToken", data.token, {
@@ -38,7 +37,7 @@ export async function POST(req: NextRequest) {
     }
 
     return NextResponse.json(
-      { message: data.message },
+      { message: data.message, user: data.user },
       { status: response.status }
     );
   } catch (error) {

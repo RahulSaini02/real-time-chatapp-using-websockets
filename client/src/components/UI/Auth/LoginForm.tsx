@@ -3,16 +3,27 @@
 import React, { useEffect, useState } from "react";
 import { Input } from "@/components/Util/Input";
 import Link from "next/link";
-
-import { userLoginFormData, userLoginFormDataErrors } from "@/types";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/context/UserContext";
+
+interface formDataType {
+  email: string;
+  password: string;
+}
+
+interface formDataErrorsType {
+  email?: string;
+  password?: string;
+}
 
 export const LoginForm = () => {
-  const [user, setUser] = useState<userLoginFormData>({
+  const { saveUser } = useUser();
+
+  const [user, setUser] = useState<formDataType>({
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState<userLoginFormDataErrors>({});
+  const [errors, setErrors] = useState<formDataErrorsType>({});
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [submitted, setSubmitted] = useState({
     message: "",
@@ -34,7 +45,7 @@ export const LoginForm = () => {
 
   // Validate form fields
   const validateForm = (): boolean => {
-    const newErrors: userLoginFormDataErrors = {};
+    const newErrors: formDataErrorsType = {};
 
     if (!user.email.trim()) {
       newErrors.email = "Email is required.";
@@ -70,11 +81,14 @@ export const LoginForm = () => {
       if (response.ok) {
         setSubmitted({ message: data.message, status: "passed" });
         // Clear form after successful submission
+
+        saveUser(data.user);
+
         setUser({ email: "", password: "" });
         setButtonDisabled(true); // Disable button again
 
         // Redirect to chat page
-        router.replace("/chat");
+        router.replace("/chats");
       } else {
         setSubmitted({ message: data.error, status: "failed" });
       }

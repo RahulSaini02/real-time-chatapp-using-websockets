@@ -1,28 +1,30 @@
 import React from "react";
-import { User } from "@/types";
+import { UserChatsType } from "@/types";
 import { InboxHeader } from "./InboxHeader";
 import { InboxParticipant } from "./InboxParticipant";
 
 export const Inbox = ({
   users,
-  handleSelectedUser,
+  openChat,
 }: {
-  users: User[];
-  handleSelectedUser: (id: number) => void;
+  users: UserChatsType[];
+  openChat: (id: number) => void;
 }) => {
   const formattedUsers = users?.map((user) => {
-    const lastMessage = user.messages[user.messages.length - 1]; // Get last message
-    const unreadCount = user.messages.filter(
-      (msg) => msg.status !== "read"
-    ).length; // Count unread messages
+    // const lastMessage = user?.messages[user.messages.length - 1]; // Get last message
+    // const unreadCount = user.messages.filter(
+    //   (msg) => msg.status !== "read"
+    // ).length; // Count unread messages
+    const time = new Date().toISOString();
     return {
-      id: user.id,
+      user_id: user.user_id,
       name: user.name,
-      lastMessage: lastMessage?.text || "", // Handle case where no messages exist
-      status: lastMessage?.status || "sent",
-      timestamp: lastMessage?.timestamp || "",
+      lastMessage: "", // Handle case where no messages exist
+      status: "sent",
+      timestamp: time,
       profile_pic: user.profile_pic,
-      unreadCount: unreadCount,
+      unreadCount: 1,
+      chat_id: user.chat_id,
     };
   });
 
@@ -38,9 +40,9 @@ export const Inbox = ({
           // creating a loop for user to appear on chatInbox
           formattedUsers.map((user, index) => (
             <div
-              key={user.id}
+              key={user.user_id}
               className={`${index == users.length - 1 ? "mb-10" : "mb-0"}`}
-              onClick={() => handleSelectedUser(user.id)}
+              onClick={() => openChat(user.user_id)}
             >
               <InboxParticipant user={user} />
             </div>

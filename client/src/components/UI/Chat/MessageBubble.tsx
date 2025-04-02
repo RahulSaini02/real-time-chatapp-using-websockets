@@ -7,9 +7,11 @@ export const MessageBubble = ({
   currentUser,
   message,
 }: {
-  currentUser: string;
+  currentUser: string | undefined;
   message: Message;
 }) => {
+  console.log("Rendered Messages: ", message);
+
   return (
     <div
       className={`flex ${currentUser == message.sender ? "justify-end" : "justify-start"}`}
@@ -19,7 +21,7 @@ export const MessageBubble = ({
       >
         {/* Message Text */}
         <p className="text-lg leading-relaxed break-words pr-14">
-          {message.text}
+          {message?.text}
         </p>
 
         {/* Time & Status */}
@@ -27,15 +29,16 @@ export const MessageBubble = ({
           className={`absolute right-2 bottom-2 flex items-center space-x-1 text-muted font-semibold text-sm`}
         >
           <span className="whitespace-nowrap">
-            {getTimeFromTimeStamp(message.timestamp)}
+            {getTimeFromTimeStamp(message?.timestamp)}
           </span>
-          {currentUser == message.sender && message.status === "sent" && (
+          {currentUser == message?.sender && message?.status === "sent" && (
             <FaCheck className="text-muted" />
           )}
-          {currentUser == message.sender && message.status === "delivered" && (
-            <FaCheckDouble className="text-muted" />
-          )}
-          {currentUser == message.sender && message.status === "read" && (
+          {currentUser == message?.sender &&
+            message?.status === "delivered" && (
+              <FaCheckDouble className="text-muted" />
+            )}
+          {currentUser == message?.sender && message?.status === "read" && (
             <FaCheckDouble className="text-blue-500" />
           )}
         </div>

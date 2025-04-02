@@ -9,7 +9,11 @@ export const WindowHeader = ({ user }: { user: User }) => {
       <div className="flex space-x-4 h-12 cursor-pointer">
         <Image
           alt={user?.name || ""}
-          src={`/profiles${user?.profile_pic}` || "/profiles/default.png"}
+          src={
+            user?.profile_pic
+              ? `/profiles/${user?.profile_pic}`
+              : "/profiles/default.png"
+          }
           className="rounded-full aspect-square object-cover"
           width={50}
           height={50}
@@ -17,7 +21,7 @@ export const WindowHeader = ({ user }: { user: User }) => {
         />
         <div className="">
           <h3 className="text-secondary text-lg font-bold">{user?.name}</h3>
-          <p className="text-accent text-base">{user?.status}</p>
+          <p className="text-accent text-base">{"online"}</p>
         </div>
       </div>
       <IoSearchOutline className="text-muted w-6 h-6 cursor-pointer" />

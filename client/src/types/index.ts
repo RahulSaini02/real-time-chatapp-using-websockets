@@ -1,27 +1,5 @@
-export interface userRegisterFormData {
-  name: string;
-  email: string;
-  password: string;
-}
-
-export interface userRegisterFormDataErrors {
-  name?: string;
-  email?: string;
-  password?: string;
-}
-
-export interface userLoginFormData {
-  email: string;
-  password: string;
-}
-
-export interface userLoginFormDataErrors {
-  email?: string;
-  password?: string;
-}
-
 export interface Message {
-  id: number;
+  id: string;
   text: string;
   sender: string;
   timestamp: string;
@@ -29,9 +7,12 @@ export interface Message {
 }
 
 export interface User {
-  id: number;
+  user_id: number;
   name: string;
+  email: string;
   profile_pic: string;
-  status: string;
-  messages: Message[];
+}
+
+export interface UserChatsType extends User {
+  chat_id: string;
 }

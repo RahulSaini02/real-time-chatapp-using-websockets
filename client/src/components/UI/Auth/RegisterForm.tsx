@@ -2,17 +2,28 @@
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { userRegisterFormData, userRegisterFormDataErrors } from "@/types";
 import { Input } from "@/components/Util/Input";
 import Link from "next/link";
 
+interface formDataType {
+  name: string;
+  email: string;
+  password: string;
+}
+
+interface formDataErrorsType {
+  name?: string;
+  email?: string;
+  password?: string;
+}
+
 export const RegisterForm = () => {
-  const [user, setUser] = useState<userRegisterFormData>({
+  const [user, setUser] = useState<formDataType>({
     name: "",
     email: "",
     password: "",
   });
-  const [errors, setErrors] = useState<userRegisterFormDataErrors>({});
+  const [errors, setErrors] = useState<formDataErrorsType>({});
   const [buttonDisabled, setButtonDisabled] = useState(true);
   const [submitted, setSubmitted] = useState({
     message: "",
@@ -37,7 +48,7 @@ export const RegisterForm = () => {
 
   // Validate form fields
   const validateForm = (): boolean => {
-    const newErrors: userRegisterFormDataErrors = {};
+    const newErrors: formDataErrorsType = {};
 
     if (!user.name.trim()) newErrors.name = "Full name is required.";
     if (!user.email.trim()) {
