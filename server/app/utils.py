@@ -8,9 +8,12 @@ def hash_password(password: str) -> str:
 def check_password(password: str, hashed_password: str) -> bool:
     return bcrypt.checkpw(password.encode("utf-8"), hashed_password.encode("utf-8"))
 
-def createJWT(email, secret, authz):
+def createJWT(user_id, name, email, profile_pic, secret, authz):
     encoded_jwt = jwt.encode({
+            "user_id": user_id,
+            "name": name,
             "email": email,
+            "profile_pic": profile_pic,
             "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1),
             "iat": datetime.datetime.utcnow(),
             "admin": authz

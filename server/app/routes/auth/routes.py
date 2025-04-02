@@ -69,8 +69,21 @@ def login():
         if not check_password(password, existing_user.password):
             return jsonify({"error": "Invalid password"}), 401
         
-        token = createJWT(email, jwt_secret, True)
-        return jsonify({"message": "Login successful", "token": token}), 200
+        token = createJWT(
+                    str(existing_user.user_id), 
+                    existing_user.name, 
+                    existing_user.email,
+                    existing_user.profile_pic, 
+                    jwt_secret, 
+                    True
+                )
+        user = {
+                "user_id": str(existing_user.user_id), 
+                "name": existing_user.name, 
+                "email": existing_user.email,
+                "profile_pic": existing_user.profile_pic
+            }
+        return jsonify({"message": "Login successful", "token": token, "user": user}), 200
           
     except Exception as e:
         db.session.rollback()
@@ -93,7 +106,6 @@ def validate():
 
         # Decode JWT
         decoded = decodeJWT(token, jwt_secret)
-        print(decoded)
 
         if "error" in decoded and decoded["error"] is not None:
             return jsonify({"error": decoded["error"]}), 401

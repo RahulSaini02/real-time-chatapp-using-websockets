@@ -1,6 +1,7 @@
 from flask_socketio import SocketIO, send, emit, join_room, leave_room, ConnectionRefusedError
 import os
 from dotenv import load_dotenv
+from datetime import datetime
 load_dotenv()
 
 SOCKET_LOGGER = os.getenv("SOCKET_LOGGER") == "TRUE"
@@ -13,37 +14,43 @@ socketio = SocketIO(
     )
 
 @socketio.on('connect')
-def connect(auth):
+def handle_connect():
     print('Client Connected')
 
-# @socketio.on('connect')
-# def connect():
-#     if not self.authenticate(request.args):
-#         raise ConnectionRefusedError('unauthorized!')
-
 @socketio.on('disconnect')
-def test_disconnect(reason):
-    print('Client disconnected, reason:', reason)
+def handle_disconnect():
+    print('Client disconnected')
 
-# @socketio.on('message')
-# def handle_message(message):
-#     send(message)
+@socketio.on('join_room')
+def handle_join_room(data):
+    user_id = data.get("user_id")
+    room = data.get('room')
+    if user_id and room: 
+        join_room(room)
+        print(f"User({user_id}) has entered the room: {room}.")
+    else:
+        print("Invalid data received for joining room:", data)
 
-@socketio.on('message')
-def handle_message(data):
-    print('received message: ' + data)
-
-@socketio.on('join')
-def on_join(data):
-    username = data['username']
-    room = data['room']
-    join_room(room)
-    print((username + ' has entered the room.'))
-    send(username + ' has entered the room.', to=room)
-
-@socketio.on('leave')
-def on_leave(data):
-    username = data['username']
-    room = data['room']
+@socketio.on('leave_room')
+def handle_leave_room(data):
+    room = data.get('room')
     leave_room(room)
-    send(username + ' has left the room.', to=room)
+    print(f"User has left the room: {room}.")
+
+@socketio.on('send_message')
+def handle_send_message(data):
+    room = data.get('room')
+    sender = data.get('sender')
+    message = data.get('message')
+    print('received message: ', message)
+
+    formatted_message = {
+        "id": str(int(os.urandom(2).hex(), 16)),
+        "text": message,
+        "sender": sender,
+        "timestamp": datetime.utcnow().isoformat() + "Z",
+        "status": "sent"
+    }
+
+    emit("receive_message", {"message": formatted_message}, room=room)
+
