@@ -10,15 +10,11 @@ import { useUser } from "@/context/UserContext";
 const Chat = () => {
   const { currentUser } = useUser();
   const [users, setUsers] = useState<UserChatsType[]>([]);
-  const [selectedUserId, setSelectedUserId] = useState<number>(0);
+  const [selectedUserId, setSelectedUserId] = useState<string>("");
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [isConnected, setIsConnected] = useState(false);
 
-  // const getUser = (user_id: number) => {
-  //   return users.find((user) => user.id == user_id);
-  // };
-
-  const openChat = (id: number) => {
+  const openChat = (id: string) => {
     setSelectedUserId(id);
   };
 

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { FaWhatsapp } from "react-icons/fa";
 import { Message, UserChatsType } from "@/types";
 import { MessageBubble } from "./MessageBubble";
@@ -13,37 +13,64 @@ export const ChatWindow = ({
   selectedUserId,
 }: {
   users: UserChatsType[];
-  selectedUserId: number;
+  selectedUserId: string;
 }) => {
   const { currentUser } = useUser();
-  const user = users.find((user) => user.user_id === selectedUserId);
+  const user = useMemo(
+    () => users.find((u) => u.user_id === selectedUserId),
+    [users, selectedUserId]
+  );
   const [chatMessages, setChatMessages] = useState<Message[]>([]);
-
+  // Load messages from database
   useEffect(() => {
-    const messageListener = (data: { message: Message }) => {
-      console.log("Received message:", data);
+    const getChatMessages = async () => {
+      const response = await fetch(
+        `/api/chats/messages?chat_id=${user?.chat_id}`,
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
 
-      if (!data || !data.message?.text) {
+      //  Geting response from API
+      const data = await response.json();
+
+      // Handling Response
+      if (response.ok) {
+        setChatMessages(data.data);
+      }
+    };
+
+    getChatMessages();
+  }, [user]);
+
+  // Load messages from websocket
+  useEffect(() => {
+    if (!currentUser?.user_id || !user?.chat_id) return;
+
+    const { user_id } = currentUser;
+    const { chat_id } = user;
+
+    console.log(`Joining chat room: ${chat_id}`);
+
+    const messageListener = (data: { data?: Message }) => {
+      console.log("Received data: ", data);
+      if (!data?.data?.message_text) {
         console.error("Invalid message received:", data);
         return;
       }
-
-      setChatMessages((prev) => [...prev, data.message]);
+      setChatMessages((prev) => [...prev, data.data as Message]);
     };
 
-    if (currentUser?.user_id && user?.chat_id) {
-      console.log("Joining room:", user.chat_id);
-      socket.emit("join_room", {
-        user_id: currentUser?.user_id,
-        room: user?.chat_id,
-      });
-      socket.on("receive_message", messageListener);
-    }
+    socket.emit("join_room", { user_id, room: chat_id });
+    socket.on("receive_message", messageListener);
+
     return () => {
+      console.log(`Leaving chat room: ${chat_id}`);
       socket.off("receive_message", messageListener);
-      socket.emit("leave", { room: user?.chat_id });
+      socket.emit("leave", { room: chat_id });
     };
-  }, [currentUser?.user_id, user?.chat_id, selectedUserId]);
+  }, [currentUser, currentUser?.user_id, user, user?.chat_id]);
 
   return !user ? (
     <div className="flex flex-col space-y-4 min-h-screen justify-center place-items-center">
@@ -60,8 +87,8 @@ export const ChatWindow = ({
       <div className="flex-1 flex-col space-y-4 p-4 overflow-scroll h-full content-end">
         {chatMessages?.map((message) => (
           <MessageBubble
-            key={message?.id || Math.random()}
-            currentUser={currentUser?.name}
+            key={message?.message_id}
+            currentUser={currentUser?.user_id}
             message={message}
           />
         ))}

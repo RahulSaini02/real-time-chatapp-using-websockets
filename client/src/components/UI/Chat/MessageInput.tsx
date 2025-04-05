@@ -21,11 +21,15 @@ export const MessageInput = ({ chat_id }: { chat_id: string }) => {
     if (!chat_id || !currentUser) return;
 
     if (text) {
-      socket.emit("send_message", {
-        room: chat_id,
-        sender: currentUser?.name,
-        message: text,
-      });
+      const message = {
+        chat_id: chat_id,
+        sender_id: currentUser.user_id,
+        message_type: "text",
+        message_text: text,
+        media_url: "",
+      };
+      socket.emit("send_message", message);
+      console.log("Sent Message: ", message);
       setText("");
     }
   };

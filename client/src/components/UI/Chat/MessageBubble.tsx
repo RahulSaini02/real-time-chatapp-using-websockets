@@ -10,18 +10,16 @@ export const MessageBubble = ({
   currentUser: string | undefined;
   message: Message;
 }) => {
-  console.log("Rendered Messages: ", message);
-
   return (
     <div
-      className={`flex ${currentUser == message.sender ? "justify-end" : "justify-start"}`}
+      className={`flex ${currentUser == message.sender_id ? "justify-end" : "justify-start"}`}
     >
       <div
-        className={`relative ${currentUser == message.sender ? "bg-green-200" : "bg-white"} text-secondary px-4 py-2 rounded-lg shadow-md max-w-[50vw]`}
+        className={`relative ${currentUser == message.sender_id ? "bg-green-200" : "bg-white"} text-secondary px-4 py-2 rounded-lg shadow-md max-w-[50vw]`}
       >
         {/* Message Text */}
         <p className="text-lg leading-relaxed break-words pr-14">
-          {message?.text}
+          {message?.message_text}
         </p>
 
         {/* Time & Status */}
@@ -29,16 +27,16 @@ export const MessageBubble = ({
           className={`absolute right-2 bottom-2 flex items-center space-x-1 text-muted font-semibold text-sm`}
         >
           <span className="whitespace-nowrap">
-            {getTimeFromTimeStamp(message?.timestamp)}
+            {getTimeFromTimeStamp(message?.message_timestamp)}
           </span>
-          {currentUser == message?.sender && message?.status === "sent" && (
+          {currentUser == message?.sender_id && message?.status === "sent" && (
             <FaCheck className="text-muted" />
           )}
-          {currentUser == message?.sender &&
+          {currentUser == message?.sender_id &&
             message?.status === "delivered" && (
               <FaCheckDouble className="text-muted" />
             )}
-          {currentUser == message?.sender && message?.status === "read" && (
+          {currentUser == message?.sender_id && message?.status === "read" && (
             <FaCheckDouble className="text-blue-500" />
           )}
         </div>

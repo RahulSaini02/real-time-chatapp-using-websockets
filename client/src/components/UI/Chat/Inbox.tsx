@@ -8,13 +8,9 @@ export const Inbox = ({
   openChat,
 }: {
   users: UserChatsType[];
-  openChat: (id: number) => void;
+  openChat: (id: string) => void;
 }) => {
   const formattedUsers = users?.map((user) => {
-    // const lastMessage = user?.messages[user.messages.length - 1]; // Get last message
-    // const unreadCount = user.messages.filter(
-    //   (msg) => msg.status !== "read"
-    // ).length; // Count unread messages
     const time = new Date().toISOString();
     return {
       user_id: user.user_id,

@@ -2,12 +2,18 @@ export const getTimeFromTimeStamp = (timestamp: string) => {
   try {
     const date = new Date(timestamp);
 
-    // Convert to user's local time in HH:MM format
     return date.toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
       hour12: false,
     });
+
+    // Convert to user's local time in HH:MM format
+    // return date.toLocaleTimeString([], {
+    //   hour: "2-digit",
+    //   minute: "2-digit",
+    //   hour12: false,
+    // });
   } catch {
     return "";
   }
