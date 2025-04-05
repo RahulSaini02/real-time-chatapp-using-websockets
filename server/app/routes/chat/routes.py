@@ -1,9 +1,8 @@
 from flask import Blueprint, request, jsonify
 from app.database import db
-from app.models import User, Chats, ChatParticipants
+from app.models import User, Chats, ChatParticipants, ChatMessages
 from sqlalchemy import select
-from sqlalchemy.orm import sessionmaker, aliased
-from sqlalchemy import create_engine, text
+from sqlalchemy.orm import aliased
 from app.config import DATABASE_URL
 
 chat_routes = Blueprint("chat_routes", __name__)
@@ -22,10 +21,10 @@ def new_chat():
 
     # Check IF chat already exists
 
+    # REMOVE BELOW
     # Create engine and session
-    engine = create_engine(DATABASE_URL)
-    Session = sessionmaker(bind=engine)
-    session = Session()
+    # engine = create_engine(DATABASE_URL)
+    # Session = sessionmaker(bind=engine)
 
     a = aliased(ChatParticipants)
     b = aliased(ChatParticipants)  
@@ -79,11 +78,6 @@ def all_chats():
       if not user:
           return jsonify({"error": "User not found!"}), 404
 
-    # Create engine and session
-    engine = create_engine(DATABASE_URL)
-    Session = sessionmaker(bind=engine)
-    session = Session()
-
     u = aliased(User)
     cp = aliased(ChatParticipants)  
 
@@ -121,6 +115,51 @@ def all_chats():
     return jsonify({"message":"Chats list", "data": user_list}), 200
 
 
+  except Exception as e:
+      db.session.rollback()
+      print("Error:", str(e))
+      return jsonify({"error": str(e)}), 500  # Internal server error
+
+@chat_routes.route("/api/chats/messages", methods=["GET"])
+def get_messages():
+  try:
+    chat_id = request.args.get("chat_id")   # Get chat id from query parameters
+    print(f'Chat Id: {chat_id}')
+    if chat_id is  None:
+       return jsonify({"error": "Chat not found!"}), 404
+    
+    cm = aliased(ChatMessages)
+    query = (
+       select(
+          cm.message_id,
+          cm.chat_id,
+          cm.sender_id,
+          cm.message_type,
+          cm.message_text,
+          cm.media_url,
+          cm.message_timestamp,
+          cm.is_deleted
+       )
+       .where(cm.chat_id == chat_id)
+    )
+    results = db.session.execute(query).fetchall()
+
+    messages = [
+          {
+            "message_id": message.message_id, 
+            "chat_id": message.chat_id, 
+            "sender_id": message.sender_id, 
+            "message_type": message.message_type, 
+            "message_text": message.message_text,
+            "media_url": message.media_url,
+            "message_timestamp": message.message_timestamp,
+            "is_deleted": message.is_deleted
+          }
+          for message in results
+        ]
+
+    return jsonify({"data": messages}), 200
+  
   except Exception as e:
       db.session.rollback()
       print("Error:", str(e))

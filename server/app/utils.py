@@ -14,7 +14,7 @@ def createJWT(user_id, name, email, profile_pic, secret, authz):
             "name": name,
             "email": email,
             "profile_pic": profile_pic,
-            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=1),
+            "exp": datetime.datetime.utcnow() + datetime.timedelta(hours=24),
             "iat": datetime.datetime.utcnow(),
             "admin": authz
         }, 

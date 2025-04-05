@@ -1,4 +1,6 @@
 from flask_socketio import SocketIO, send, emit, join_room, leave_room, ConnectionRefusedError
+from app.models import ChatMessages
+from app.database import db
 import os
 from dotenv import load_dotenv
 from datetime import datetime
@@ -39,18 +41,30 @@ def handle_leave_room(data):
 
 @socketio.on('send_message')
 def handle_send_message(data):
-    room = data.get('room')
-    sender = data.get('sender')
-    message = data.get('message')
-    print('received message: ', message)
+    chat_id = data.get('chat_id')
+    sender_id = data.get('sender_id')
+    message_type = data.get('message_type')
+    message_text = data.get('message_text')
+    media_url = data.get('media_url')
 
-    formatted_message = {
-        "id": str(int(os.urandom(2).hex(), 16)),
-        "text": message,
-        "sender": sender,
-        "timestamp": datetime.utcnow().isoformat() + "Z",
-        "status": "sent"
-    }
+    if chat_id and sender_id and message_type and message_text:
+        new_message = ChatMessages(chat_id, sender_id, message_type, message_text, media_url)
+        db.session.add(new_message)
+        db.session.flush()
 
-    emit("receive_message", {"message": formatted_message}, room=room)
+        formatted_message = {
+            "message_id": str(new_message.message_id),
+            "chat_id": str(new_message.chat_id),
+            "sender_id": str(new_message.sender_id),
+            "message_type": new_message.message_type,
+            "message_text": new_message.message_text,
+            "media_url": new_message.media_url,
+            "message_timestamp": str(new_message.message_timestamp),
+            "is_deleted": new_message.is_deleted,
+            "status": "delivered"
+        }
+
+        db.session.commit()
+
+        emit("receive_message", {"data": formatted_message}, room=str(chat_id))
 
